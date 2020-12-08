@@ -4,7 +4,6 @@ cd build_cpp
 cmake %SRC_DIR% -G "NMake Makefiles" ^
                 -DCMAKE_PREFIX_PATH="%PREFIX%" ^
                 -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
-                -DCMAKE_INSTALL_LIBDIR="lib" ^
                 -DCMAKE_BUILD_TYPE=Release ^
                 -DBUILD_SHARED_LIBS=ON ^
                 -DBUILD_EXAMPLES=OFF ^
@@ -18,9 +17,7 @@ if errorlevel 1 exit 1
 nmake install
 if errorlevel 1 exit 1
 
-dir
-dir lib
-copy lib\s2.dll %PREFIX%\Library\bin\s2.dll
+move %PREFIX%\Library\lib\s2.dll %PREFIX%\Library\bin\s2.dll
 if errorlevel 1 exit 1
 copy %PREFIX%\Library\bin\s2.dll %PREFIX%\Library\bin\libs2.dll
 if errorlevel 1 exit 1
