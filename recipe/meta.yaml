@@ -28,10 +28,10 @@ test:
     - test -f ${PREFIX}/lib/libs2.dylib  # [osx]
     - test -f ${PREFIX}/lib/libs2.so     # [linux]
     - test -f ${PREFIX}/include/s2/s2cell.h  # [unix]
-    - if not exist %LIBRARY_BIN%\lib\s2.dll exit 1  # [win]
-    - if not exist %LIBRARY_BIN%\lib\libs2.dll exit 1  # [win]
-    - if not exist %LIBRARY_LIB%\lib\s2.lib exit 1  # [win]
-    - if not exist %LIBRARY_LIB%\lib\libs2.lib exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\s2.dll exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\libs2.dll exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\s2.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\libs2.lib exit 1  # [win]
     - if not exist %LIBRARY_INC%\s2cell.h exit 1  # [win]
 
 about:
