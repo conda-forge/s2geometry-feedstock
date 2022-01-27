@@ -23,6 +23,7 @@ requirements:
   host:
     - openssl
     - gtest
+    - gmock
 
 test:
   commands:
