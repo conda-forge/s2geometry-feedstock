@@ -22,7 +22,7 @@ requirements:
     - make  # [linux]
   host:
     - openssl
-    - gtest >=1.8,<1.10
+    - gtest
 
 test:
   commands:
