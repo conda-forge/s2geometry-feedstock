@@ -4,7 +4,7 @@ set -eu
 mkdir build
 cd build
 
-if [[ "$CONDA_BUILD_CROSS_COMPILATION" != "1" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION}" != "1" ]]; then
   GTEST_ROOT_DIR=$PREFIX
 else
   GTEST_ROOT_DIR=""
@@ -25,7 +25,7 @@ cmake ${CMAKE_ARGS} \
 cmake --build . -- -j${CPU_COUNT}
 
 ### Run all tests
-if [[ "$CONDA_BUILD_CROSS_COMPILATION" != "1" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION}" != "1" ]]; then
   cmake --build . -- test
 fi
 
