@@ -4,6 +4,12 @@ set -eu
 mkdir build
 cd build
 
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" != "1" ]]; then
+  GTEST_ROOT_DIR=$PREFIX
+else
+  GTEST_ROOT_DIR=""
+fi
+
 ### Create Makefiles
 cmake ${CMAKE_ARGS} \
       -DCMAKE_PREFIX_PATH=$PREFIX \
@@ -12,16 +18,16 @@ cmake ${CMAKE_ARGS} \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=ON \
       -DBUILD_EXAMPLES=OFF \
-      -DGTEST_ROOT=$PREFIX \
+      -DGTEST_ROOT=$GTEST_ROOT_DIR \
       $SRC_DIR
 
 ### Build
 cmake --build . -- -j${CPU_COUNT}
 
 ### Run all tests
-### Temporarily ignore failing tests for now,
-### due to 1/100 test (encode/decode) failing on Linux for unknown reason
-cmake --build . -- CTEST_OUTPUT_ON_FAILURE=1 test || true
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" != "1" ]]; then
+  cmake --build . -- test
+fi
 
 ### Install
 cmake --build . -- install
