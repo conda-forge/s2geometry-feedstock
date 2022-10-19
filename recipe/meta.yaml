@@ -8,9 +8,6 @@ package:
 source:
   url: https://github.com/google/s2geometry/archive/v{{ version }}.tar.gz
   sha256: 1c17b04f1ea20ed09a67a83151ddd5d8529716f509dde49a8190618d70532a3d
-  patches:
-    # use gtest shipped by conda-forge instead of building it from source
-    - use_installed_gtest.patch
 
 build:
   number: 0
