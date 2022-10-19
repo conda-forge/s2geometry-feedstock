@@ -11,8 +11,6 @@ source:
   patches:
     # use gtest shipped by conda-forge instead of building it from source
     - use_installed_gtest.patch
-    # fix osx-arm64 build (TODO: remove when absl is an external dependency)
-    - fix_absl_unaligned_access.patch  # [build_platform != target_platform]
 
 build:
   number: 4
@@ -26,6 +24,7 @@ requirements:
     - openssl
     - gtest
     - gmock
+    - abseil-cpp
 
 test:
   commands:
