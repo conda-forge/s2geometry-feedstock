@@ -1,0 +1,24 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f080b4b..df7b9cf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -430,8 +430,8 @@ install(TARGETS ${S2_TARGETS}
+ 
+ message("GTEST_ROOT: ${GTEST_ROOT}")
+ if (GTEST_ROOT)
+-  add_subdirectory(${GTEST_ROOT} build_gtest)
+-  include_directories(${GTEST_ROOT}/include)
++  find_package(GTest REQUIRED)
++  include_directories(${GTEST_INCLUDE_DIRS})
+ 
+   set(S2TestFiles
+       src/s2/encoded_s2cell_id_vector_test.cc
+@@ -557,7 +557,7 @@ if (GTEST_ROOT)
+         absl::span
+         absl::strings
+         absl::synchronization
+-        gtest_main)
++        GTest::GTest GTest::Main)
+     add_test(${test} ${test})
+   endforeach()
+ endif()
