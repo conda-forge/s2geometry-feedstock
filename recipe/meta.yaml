@@ -13,7 +13,7 @@ source:
     - use_installed_gtest.patch
 
 build:
-  number: 4
+  number: 0
 
 requirements:
   build:
