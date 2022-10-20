@@ -20,6 +20,7 @@ cmake ${CMAKE_ARGS} \
       -DBUILD_SHARED_LIBS=ON \
       -DBUILD_EXAMPLES=OFF \
       -DGTEST_ROOT=$GTEST_ROOT_DIR \
+      -D__STDC_FORMAT_MACROS \
       $SRC_DIR
 
 ### Build
