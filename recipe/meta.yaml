@@ -11,6 +11,8 @@ source:
   patches:
     # use gtest shipped by conda-forge instead of building it from source
     - use_installed_gtest.patch
+    # TODO: remove for version > 0.10.0
+    - allow_override_cpp_standard.patch
 
 build:
   number: 0
