@@ -26,7 +26,9 @@ requirements:
     - openssl
     - gtest
     - gmock
-    - abseil-cpp
+    - libabseil
+  run:
+    - libabseil
 
 test:
   commands:
