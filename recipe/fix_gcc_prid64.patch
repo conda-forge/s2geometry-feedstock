@@ -1,0 +1,15 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f080b4b..ebb37dc 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -97,6 +97,10 @@ else()
+     add_definitions(-Wno-deprecated-declarations)
+ endif()
+ 
++if (GEST_ROOT)
++  add_definitions(-D__STDC_FORMAT_MACROS)
++endif()
++
+ # If OpenSSL is installed in a non-standard location, configure with
+ # something like:
+ # OPENSSL_ROOT_DIR=/usr/local/opt/openssl cmake ..

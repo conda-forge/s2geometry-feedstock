@@ -13,6 +13,8 @@ source:
     - use_installed_gtest.patch
     # TODO: remove for version > 0.10.0
     - allow_override_cpp_standard.patch
+    # old gcc version used for linux builds?
+    - fix_gcc_prid64.patch  # [linux]
 
 build:
   number: 0
