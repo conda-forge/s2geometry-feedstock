@@ -7,7 +7,7 @@ index f080b4b..ebb37dc 100644
  endif()
  
 +if (GEST_ROOT)
-+  add_definitions(-D__STDC_FORMAT_MACROS)
++  add_definitions("-D__STDC_FORMAT_MACROS")
 +endif()
 +
  # If OpenSSL is installed in a non-standard location, configure with
