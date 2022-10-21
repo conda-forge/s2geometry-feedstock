@@ -12,6 +12,7 @@ fi
 
 ### Create Makefiles
 cmake ${CMAKE_ARGS} \
+      -DCMAKE_CXX_STANDARD=17 \
       -DCMAKE_PREFIX_PATH=$PREFIX \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DCMAKE_INSTALL_LIBDIR=lib \
