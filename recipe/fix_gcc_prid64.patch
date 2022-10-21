@@ -1,15 +1,24 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f080b4b..ebb37dc 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -97,6 +97,10 @@ else()
-     add_definitions(-Wno-deprecated-declarations)
- endif()
+diff --git a/src/s2/s2builder_test.cc b/src/s2/s2builder_test.cc
+index 0a01d32..7d8d522 100644
+--- a/src/s2/s2builder_test.cc
++++ b/src/s2/s2builder_test.cc
+@@ -15,6 +15,7 @@
  
-+if (GEST_ROOT)
-+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS")
-+endif()
-+
- # If OpenSSL is installed in a non-standard location, configure with
- # something like:
- # OPENSSL_ROOT_DIR=/usr/local/opt/openssl cmake ..
+ // Author: ericv@google.com (Eric Veach)
+ 
++#define __STDC_FORMAT_MACROS
+ #include "s2/s2builder.h"
+ 
+ #include <algorithm>
+diff --git a/src/s2/s2builderutil_snap_functions_test.cc b/src/s2/s2builderutil_snap_functions_test.cc
+index 83b651f..3a46a97 100644
+--- a/src/s2/s2builderutil_snap_functions_test.cc
++++ b/src/s2/s2builderutil_snap_functions_test.cc
+@@ -22,6 +22,7 @@
+ // spherical case is slightly better or worse because of the spherical
+ // distortion.
+ 
++#define __STDC_FORMAT_MACROS
+ #include "s2/s2builderutil_snap_functions.h"
+ 
+ #include <algorithm>
