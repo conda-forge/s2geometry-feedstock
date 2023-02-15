@@ -17,9 +17,12 @@ source:
     - fix_gcc_prid64.patch  # [linux]
     # missing DLL exports on windows (data)
     - dllexport.patch
+    # disable failing test on Linux with last absl release
+    # (disabled too in s2geometry head for other cases)
+    - disable_linux_s2builder_test.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
