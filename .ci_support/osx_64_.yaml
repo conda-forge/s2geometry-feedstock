@@ -1,7 +1,5 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '10.9'
-abseil_cpp:
-- '20220623.0'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -10,6 +8,8 @@ cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '14'
+libabseil:
+- '20230125'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 openssl:
