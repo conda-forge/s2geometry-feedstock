@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -xe
 
 mkdir build
 cd build
@@ -20,6 +20,8 @@ cmake ${CMAKE_ARGS} \
       -DBUILD_SHARED_LIBS=ON \
       -DBUILD_EXAMPLES=OFF \
       -DGTEST_ROOT=$GTEST_ROOT_DIR \
+      -DWITH_PYTHON=ON \
+      -DPython3_EXECUTABLE=${PYTHON} \
       $SRC_DIR
 
 ### Build

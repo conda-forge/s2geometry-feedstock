@@ -22,22 +22,27 @@ source:
     - disable_linux_s2builder_test.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
     - {{ compiler("cxx") }}
     - cmake >=3.12,<4
     - make  # [linux]
+    - swig
   host:
     - openssl
     - gtest
     - gmock
     - libabseil
+    - python
   run:
     - libabseil
+    - python
 
 test:
+  imports:
+    - pywraps2
   commands:
     - test -f ${PREFIX}/lib/libs2.dylib  # [osx]
     - test -f ${PREFIX}/lib/libs2.so     # [linux]
