@@ -41,6 +41,8 @@ requirements:
     - python
 
 test:
+  imports:
+    - pywraps2
   commands:
     - test -f ${PREFIX}/lib/libs2.dylib  # [osx]
     - test -f ${PREFIX}/lib/libs2.so     # [linux]
