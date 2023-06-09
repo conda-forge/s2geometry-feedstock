@@ -24,4 +24,4 @@ if errorlevel 1 exit 1
 copy %PREFIX%\Library\lib\s2.lib %PREFIX%\Library\lib\libs2.lib
 if errorlevel 1 exit 1
 
-%PYTHON%  -m pip install . --no-deps -vv
+rem %PYTHON%  -m pip install . --no-deps -vv
