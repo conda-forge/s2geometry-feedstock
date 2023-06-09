@@ -20,6 +20,8 @@ cmake ${CMAKE_ARGS} \
       -DBUILD_SHARED_LIBS=ON \
       -DBUILD_EXAMPLES=OFF \
       -DGTEST_ROOT=$GTEST_ROOT_DIR \
+      -DWITH_PYTHON=ON \
+      -DPython3_EXECUTABLE=${PYTHON} \
       $SRC_DIR
 
 ### Build
@@ -32,3 +34,5 @@ fi
 
 ### Install
 cmake --build . -- install
+
+${PYTHON} -m pip install . --no-deps -vv

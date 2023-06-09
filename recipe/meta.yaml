@@ -29,11 +29,13 @@ requirements:
     - {{ compiler("cxx") }}
     - cmake >=3.12,<4
     - make  # [linux]
+    - swig
   host:
     - openssl
     - gtest
     - gmock
     - libabseil
+    - python
   run:
     - libabseil
 
