@@ -34,5 +34,3 @@ fi
 
 ### Install
 cmake --build . -- install
-
-# ${PYTHON} -m pip install . --no-deps -vv

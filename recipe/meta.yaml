@@ -36,7 +36,6 @@ requirements:
     - gmock
     - libabseil
     - python
-    - pip
   run:
     - libabseil
     - python
