@@ -1,11 +1,11 @@
-About s2geometry
-================
+About s2geometry-feedstock
+==========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/s2geometry-feedstock/blob/main/LICENSE.txt)
 
 Home: https://s2geometry.io/
 
 Package license: Apache-2.0
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/s2geometry-feedstock/blob/main/LICENSE.txt)
 
 Summary: Computational geometry and spatial indexing on the sphere.
 
