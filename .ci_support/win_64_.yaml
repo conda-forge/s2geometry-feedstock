@@ -5,7 +5,7 @@ channel_targets:
 cxx_compiler:
 - vs2019
 libabseil:
-- '20230802'
+- '20240116'
 openssl:
 - '3'
 target_platform:
