@@ -22,7 +22,7 @@ source:
     - disable_linux_s2builder_test.patch
 
 build:
-  number: 4
+  number: 5
 
 requirements:
   build:
