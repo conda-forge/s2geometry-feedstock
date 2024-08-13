@@ -13,6 +13,7 @@ cmake ${CMAKE_ARGS} \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=ON \
       -DBUILD_EXAMPLES=OFF \
+      -DBUILD_TESTS=OFF \
       -UGOOGLETEST_ROOT \
       $SRC_DIR
 

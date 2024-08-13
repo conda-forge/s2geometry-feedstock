@@ -8,6 +8,7 @@ cmake %SRC_DIR% -G "NMake Makefiles" ^
                 -DCMAKE_BUILD_TYPE=Release ^
                 -DBUILD_SHARED_LIBS=ON ^
                 -DBUILD_EXAMPLES=OFF ^
+                -DBUILD_TESTS=OFF ^
                 -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE ^
                 -UGOOGLETEST_ROOT
 if errorlevel 1 exit 1
