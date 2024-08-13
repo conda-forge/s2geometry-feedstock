@@ -2,7 +2,7 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index f080b4b..b324094 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -209,6 +209,10 @@ add_library(s2
+@@ -193,6 +193,10 @@ add_library(s2
              src/s2/util/math/mathutil.cc
              src/s2/util/units/length-units.cc)
  
@@ -10,17 +10,17 @@ index f080b4b..b324094 100644
 +  target_compile_definitions(s2 PRIVATE S2GEOMETRY_BUILDING_S2GEOMETRY)
 +endif()
 +
- if (GTEST_ROOT)
+ if (GOOGLETEST_ROOT)
    add_library(s2testing STATIC
                src/s2/s2builderutil_testing.cc
 diff --git a/src/s2/base/port.h b/src/s2/base/port.h
 index 0efaba8..e810617 100644
 --- a/src/s2/base/port.h
 +++ b/src/s2/base/port.h
-@@ -46,6 +46,17 @@
- // MSVC Specific Requirements
- // -----------------------------------------------------------------------------
- 
+@@ -25,6 +25,17 @@
+
+ #include "s2/base/integral_types.h"
+
 +#ifdef _WIN32
 +  #ifdef S2GEOMETRY_BUILDING_S2GEOMETRY
 +    #define S2GEOMETRY_DLL __declspec(dllexport)
@@ -32,9 +32,9 @@ index 0efaba8..e810617 100644
 +#endif
 +
 +
- #ifdef _MSC_VER /* if Visual C++ */
- 
- #include <intrin.h>
+// -----------------------------------------------------------------------------
+// Endianness
+// -----------------------------------------------------------------------------
 diff --git a/src/s2/s2coords_internal.h b/src/s2/s2coords_internal.h
 index df2f606..69d3878 100644
 --- a/src/s2/s2coords_internal.h
