@@ -19,7 +19,7 @@ cmake ${CMAKE_ARGS} \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=ON \
       -DBUILD_EXAMPLES=OFF \
-      -DGTEST_ROOT=$GTEST_ROOT_DIR \
+      -DGOOGLETEST_ROOT=$GTEST_ROOT_DIR \
       $SRC_DIR
 
 ### Build
