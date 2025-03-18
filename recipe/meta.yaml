@@ -13,7 +13,7 @@ source:
     - dllexport.patch
 
 build:
-  number: 3
+  number: 4
   run_exports:
     # breaking changes are expected in minor 0.x releases
     - {{ pin_subpackage('s2geometry', max_pin='x.x') }}
@@ -23,7 +23,7 @@ requirements:
     - {{ compiler("cxx") }}
     - {{ stdlib("c") }}
     - cmake >=3.25,<4
-    - make  # [linux]
+    - make  # [unix]
   host:
     - openssl
     - libabseil
