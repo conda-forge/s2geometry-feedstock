@@ -1,5 +1,5 @@
 {% set name = "s2geometry" %}
-{% set version = "0.11.1" %}
+{% set version = "0.12.0" %}
 
 package:
   name: {{ name }}
@@ -7,13 +7,13 @@ package:
 
 source:
   url: https://github.com/google/s2geometry/archive/v{{ version }}.tar.gz
-  sha256: bdbeb8ebdb88fa934257caf81bb44b55711617a3ab4fdec2c3cfd6cc31b61734
+  sha256: c09ec751c3043965a0d441e046a73c456c995e6063439a72290f661c1054d611
   patches:
     # missing DLL exports on windows (data)
     - dllexport.patch
 
 build:
-  number: 4
+  number: 0
   run_exports:
     # breaking changes are expected in minor 0.x releases
     - {{ pin_subpackage('s2geometry', max_pin='x.x') }}
