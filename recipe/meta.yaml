@@ -11,6 +11,7 @@ source:
   patches:
     # missing DLL exports on windows (data)
     - dllexport.patch
+    - python-setup.patch
 
 build:
   number: 1
@@ -24,11 +25,48 @@ requirements:
     - {{ stdlib("c") }}
     - cmake >=3.25,<4
     - make  # [unix]
+
   host:
     - openssl
     - libabseil
   run:
     - libabseil
+
+outputs:
+
+  - name: s2geometry
+
+  - name: s2geometry-python
+    script: install_python.sh  # [unix]
+    script: install_python.bat  # [win]
+    build:
+    requirements:
+      build:
+        - {{ stdlib("c") }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - make  # [unix]
+        - ninja  # [win]
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - swig
+      host:
+        - python
+        - pip
+        - setuptools
+        - libabseil
+        - cmake-build-extension
+
+      run:
+        - libabseil
+        - python
+    test:
+      source_files:
+        - src/python/s2geometry_test.py
+      commands:
+        - python ./src/python/s2geometry_test.py
+      imports:
+        - s2geometry
 
 test:
   files:

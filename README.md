@@ -70,6 +70,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-s2geometry-green.svg)](https://anaconda.org/conda-forge/s2geometry) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/s2geometry.svg)](https://anaconda.org/conda-forge/s2geometry) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/s2geometry.svg)](https://anaconda.org/conda-forge/s2geometry) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/s2geometry.svg)](https://anaconda.org/conda-forge/s2geometry) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-s2geometry--python-green.svg)](https://anaconda.org/conda-forge/s2geometry-python) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/s2geometry-python.svg)](https://anaconda.org/conda-forge/s2geometry-python) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/s2geometry-python.svg)](https://anaconda.org/conda-forge/s2geometry-python) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/s2geometry-python.svg)](https://anaconda.org/conda-forge/s2geometry-python) |
 
 Installing s2geometry
 =====================
@@ -81,16 +82,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `s2geometry` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `s2geometry, s2geometry-python` can be installed with `conda`:
 
 ```
-conda install s2geometry
+conda install s2geometry s2geometry-python
 ```
 
 or with `mamba`:
 
 ```
-mamba install s2geometry
+mamba install s2geometry s2geometry-python
 ```
 
 It is possible to list all of the versions of `s2geometry` available on your platform with `conda`:
