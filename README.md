@@ -187,4 +187,5 @@ Feedstock Maintainers
 =====================
 
 * [@benbovy](https://github.com/benbovy/)
+* [@hobu](https://github.com/hobu/)
 
