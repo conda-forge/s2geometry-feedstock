@@ -32,6 +32,11 @@ requirements:
   run:
     - libabseil
 
+test:
+  files:
+    run_test.bat
+    run_test.sh
+
 outputs:
 
   - name: s2geometry
@@ -39,7 +44,6 @@ outputs:
   - name: s2geometry-python
     script: install_python.sh  # [unix]
     script: install_python.bat  # [win]
-    build:
     requirements:
       build:
         - {{ stdlib("c") }}
@@ -69,10 +73,6 @@ outputs:
       imports:
         - s2geometry
 
-test:
-  files:
-    run_test.bat
-    run_test.sh
 
 about:
   home: https://s2geometry.io/
