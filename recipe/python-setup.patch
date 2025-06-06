@@ -1,8 +1,8 @@
 diff --git a/setup.py b/setup.py
-index 6623420..b2ffe77 100644
+index 6623420..9913f56 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -18,7 +18,7 @@ setuptools.setup(
+@@ -18,10 +18,11 @@ setuptools.setup(
                                          # This option points CMake to the right Python interpreter, and helps
                                          # the logic of FindPython3.cmake to find the active version
                                          f"-DPython3_ROOT_DIR={Path(sys.prefix)}",
@@ -11,3 +11,7 @@ index 6623420..b2ffe77 100644
                                          '-DBUILD_SHARED_LIBS:BOOL=OFF',
                                          '-DCMAKE_POSITION_INDEPENDENT_CODE=ON',
                                          '-DBUILD_TESTS=OFF',
++                                        '-UGOOGLETEST_ROOT',
+                                         '-DWITH_PYTHON=ON'
+                                     ]
+         )
