@@ -61,15 +61,16 @@ outputs:
         - setuptools
         - libabseil
         - cmake-build-extension
+        - openssl
 
       run:
         - libabseil
-        - python
+        - openssl
     test:
       source_files:
         - src/python/s2geometry_test.py
       commands:
-        - python ./src/python/s2geometry_test.py
+        - python ./src/python/s2geometry_test.py > /dev/null
       imports:
         - s2geometry
 
