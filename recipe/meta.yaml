@@ -11,9 +11,10 @@ source:
   patches:
     # missing DLL exports on windows (data)
     - dllexport.patch
+    - python-setup.patch
 
 build:
-  number: 0
+  number: 1
   run_exports:
     # breaking changes are expected in minor 0.x releases
     - {{ pin_subpackage('s2geometry', max_pin='x.x') }}
@@ -24,6 +25,7 @@ requirements:
     - {{ stdlib("c") }}
     - cmake >=3.25,<4
     - make  # [unix]
+
   host:
     - openssl
     - libabseil
@@ -31,16 +33,47 @@ requirements:
     - libabseil
 
 test:
-  commands:
-    - test -f ${PREFIX}/lib/libs2.dylib  # [osx]
-    - test -f ${PREFIX}/lib/libs2.so     # [linux]
-    - test -f ${PREFIX}/include/s2/s2cell.h  # [unix]
-    - test -f ${PREFIX}/share/s2/s2Config.cmake  # [unix]
-    - if not exist %LIBRARY_BIN%\s2.dll exit 1  # [win]
-    - if not exist %LIBRARY_BIN%\libs2.dll exit 1  # [win]
-    - if not exist %LIBRARY_LIB%\s2.lib exit 1  # [win]
-    - if not exist %LIBRARY_LIB%\libs2.lib exit 1  # [win]
-    - if not exist %LIBRARY_INC%\s2\s2cell.h exit 1  # [win]
+  files:
+    run_test.bat
+    run_test.sh
+
+outputs:
+
+  - name: s2geometry
+
+  - name: s2geometry-python
+    script: install_python.sh  # [unix]
+    script: install_python.bat  # [win]
+    requirements:
+      build:
+        - {{ stdlib("c") }}
+        - {{ compiler('cxx') }}
+        - cmake
+        - make  # [unix]
+        - ninja  # [win]
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - cmake-build-extension                  # [build_platform != target_platform]
+        - swig
+      host:
+        - python
+        - pip
+        - setuptools
+        - libabseil
+        - cmake-build-extension
+        - openssl
+
+      run:
+        - libabseil
+        - openssl
+    test:
+      source_files:
+        - src/python/s2geometry_test.py
+      commands:
+        - python ./src/python/s2geometry_test.py > /dev/null
+      imports:
+        - s2geometry
+
 
 about:
   home: https://s2geometry.io/
@@ -53,3 +86,4 @@ about:
 extra:
   recipe-maintainers:
     - benbovy
+    - hobu

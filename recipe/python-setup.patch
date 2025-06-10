@@ -1,0 +1,12 @@
+diff --git a/setup.py b/setup.py
+index 242882a..649dc1d 100644
+--- a/setup.py
++++ b/setup.py
+@@ -21,6 +21,7 @@ setuptools.setup(
+                                         f"-DPython3_ROOT_DIR={Path(sys.prefix)}",
+                                         '-DCALL_FROM_SETUP_PY:BOOL=ON',
+                                         '-DBUILD_SHARED_LIBS:BOOL=OFF',
++                                        '-DBUILD_TESTS:BOOL=OFF',
+                                         '-DCMAKE_POSITION_INDEPENDENT_CODE=ON',
+                                         '-DWITH_PYTHON=ON'
+                                     ]
