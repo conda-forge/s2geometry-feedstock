@@ -14,7 +14,7 @@ source:
     - python-setup.patch
 
 build:
-  number: 2
+  number: 3
   run_exports:
     # breaking changes are expected in minor 0.x releases
     - {{ pin_subpackage('s2geometry', max_pin='x.x') }}
