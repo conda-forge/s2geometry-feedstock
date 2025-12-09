@@ -8,10 +8,6 @@ package:
 source:
   url: https://github.com/google/s2geometry/archive/v{{ version }}.tar.gz
   sha256: 6091ca0138225f3effbd80b9c416b527c66eb30460f3f050f45345a3c0c1c79c
-  patches:
-    # missing DLL exports on windows (data)
-    - dllexport.patch
-    - python-setup.patch
 
 build:
   number: 0
@@ -23,14 +19,14 @@ requirements:
   build:
     - {{ compiler("cxx") }}
     - {{ stdlib("c") }}
-    - cmake >=3.25,<4
+    - cmake
     - make  # [unix]
 
   host:
     - openssl
-    - libabseil
+    - libabseil >=20250814.1
   run:
-    - libabseil
+    - libabseil >=20250814.1
 
 test:
   files: run_test.bat run_test.sh
