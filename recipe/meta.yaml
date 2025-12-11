@@ -10,7 +10,6 @@ source:
   sha256: df001f8352dce083a87b74646bcbc65fbbcd039646bda5b64adfda1e2ea32d47
   patches:
     # missing DLL exports on windows (data)
-    - dllexport.patch
     - python-setup.patch
 
 build:
@@ -23,14 +22,14 @@ requirements:
   build:
     - {{ compiler("cxx") }}
     - {{ stdlib("c") }}
-    - cmake >=3.25,<4
+    - cmake
     - make  # [unix]
 
   host:
     - openssl
-    - libabseil
+    - libabseil >=20250814.1
   run:
-    - libabseil
+    - libabseil >=20250814.1
 
 test:
   files: run_test.bat run_test.sh
@@ -52,7 +51,7 @@ outputs:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - cmake-build-extension                  # [build_platform != target_platform]
-        - swig
+        - swig <=4.3
       host:
         - python
         - pip
@@ -62,7 +61,7 @@ outputs:
         - openssl
 
       run:
-        - libabseil
+        - libabseil >=20250814.1
         - openssl
     test:
       source_files:
