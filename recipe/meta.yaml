@@ -54,7 +54,7 @@ outputs:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - cmake-build-extension                  # [build_platform != target_platform]
-        - swig
+        - swig <4.4
       host:
         - python
         - pip
