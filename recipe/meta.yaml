@@ -1,5 +1,5 @@
 {% set name = "s2geometry" %}
-{% set version = "0.12.0" %}
+{% set version = "0.13.0" %}
 
 package:
   name: {{ name }}
@@ -7,14 +7,12 @@ package:
 
 source:
   url: https://github.com/google/s2geometry/archive/v{{ version }}.tar.gz
-  sha256: c09ec751c3043965a0d441e046a73c456c995e6063439a72290f661c1054d611
+  sha256: 6091ca0138225f3effbd80b9c416b527c66eb30460f3f050f45345a3c0c1c79c
   patches:
-    # missing DLL exports on windows (data)
-    - dllexport.patch
     - python-setup.patch
 
 build:
-  number: 3
+  number: 0
   run_exports:
     # breaking changes are expected in minor 0.x releases
     - {{ pin_subpackage('s2geometry', max_pin='x.x') }}
@@ -23,19 +21,17 @@ requirements:
   build:
     - {{ compiler("cxx") }}
     - {{ stdlib("c") }}
-    - cmake >=3.25,<4
+    - cmake
     - make  # [unix]
 
   host:
     - openssl
-    - libabseil
+    - libabseil >=20250814.1
   run:
-    - libabseil
+    - libabseil >=20250814.1
 
 test:
-  files:
-    run_test.bat
-    run_test.sh
+  files: run_test.bat run_test.sh
 
 outputs:
 
@@ -54,17 +50,17 @@ outputs:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - cmake-build-extension                  # [build_platform != target_platform]
-        - swig
+        - swig <= 4.3
       host:
         - python
         - pip
         - setuptools
-        - libabseil
+        - libabseil >=20250814.1
         - cmake-build-extension
         - openssl
 
       run:
-        - libabseil
+        - libabseil >=20250814.1
         - openssl
     test:
       source_files:
