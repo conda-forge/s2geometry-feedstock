@@ -32,9 +32,9 @@ outputs:
           then: make
       host:
         - openssl
-        - libabseil < 20250512
+        - libabseil =20240116
       run:
-        - libabseil < 20250512
+        - libabseil =20240116
       run_exports:
         - ${{ pin_subpackage('s2geometry', upper_bound='x.x') }}
     tests:
@@ -73,11 +73,11 @@ outputs:
         - pip
         - setuptools >=80
         - setuptools-scm >=8
-        - libabseil < 20250512
+        - libabseil =20240116
         - cmake-build-extension
         - openssl
       run:
-        - libabseil < 20250512
+        - libabseil =20240116
         - openssl
     tests:
       - python:
