@@ -12,6 +12,7 @@ source:
     # missing DLL exports on windows (data)
     - dllexport.patch
     - python-setup.patch
+    - version.patch
 
 build:
   number: 4
@@ -28,9 +29,9 @@ requirements:
 
   host:
     - openssl
-    - libabseil
+    - libabseil <20250512
   run:
-    - libabseil
+    - libabseil <20250512
 
 test:
   files:
@@ -54,17 +55,18 @@ outputs:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - cmake-build-extension                  # [build_platform != target_platform]
-        - swig < 4.4
+        - swig <4.4
       host:
         - python
         - pip
-        - setuptools
-        - libabseil
+        - setuptools >=80
+        - setuptools-scm >=8
+        - libabseil <20250512
         - cmake-build-extension
         - openssl
 
       run:
-        - libabseil
+        - libabseil <20250512
         - openssl
     test:
       source_files:
