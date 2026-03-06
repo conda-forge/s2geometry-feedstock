@@ -87,7 +87,7 @@ outputs:
           source:
             - src/python/s2geometry_test.py
         script:
-          - python ./src/python/s2geometry_test.py > /dev/null
+          - python ./src/python/s2geometry_test.py
         requirements:
           run:
             - python
