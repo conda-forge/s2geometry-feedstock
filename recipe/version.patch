@@ -1,0 +1,9 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 6a55b8c..9938160 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -56,3 +56,4 @@ namespaces = false
+ [tool.setuptools.package-dir]
+ "" = "src"
+ 
++[tool.setuptools_scm]
