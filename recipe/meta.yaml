@@ -1,5 +1,5 @@
 {% set name = "s2geometry" %}
-{% set version = "0.12.0" %}
+{% set version = "0.14.0" %}
 
 package:
   name: {{ name }}
@@ -7,14 +7,14 @@ package:
 
 source:
   url: https://github.com/google/s2geometry/archive/v{{ version }}.tar.gz
-  sha256: c09ec751c3043965a0d441e046a73c456c995e6063439a72290f661c1054d611
+  sha256: 8c1f0a4b98472ed9df9807f5ec10ee57928cca388e16c13f430b652790d3ad8b
   patches:
     # missing DLL exports on windows (data)
     - dllexport.patch
     - python-setup.patch
 
 build:
-  number: 3
+  number: 0
   run_exports:
     # breaking changes are expected in minor 0.x releases
     - {{ pin_subpackage('s2geometry', max_pin='x.x') }}
@@ -33,9 +33,7 @@ requirements:
     - libabseil
 
 test:
-  files:
-    run_test.bat
-    run_test.sh
+  files: run_test.bat run_test.sh
 
 outputs:
 
