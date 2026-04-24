@@ -9,7 +9,7 @@ cxx_compiler:
 libabseil:
 - '20250512'
 openssl:
-- '3'
+- '3.5'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -19,7 +19,6 @@ python:
 - 3.11.* *_cpython
 - 3.12.* *_cpython
 - 3.13.* *_cp313
-- 3.9.* *_cpython
 s2geometry:
 - 0.11.1
 target_platform:
