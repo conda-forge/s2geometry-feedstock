@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: s2geometry
-  version: "0.12.0"
+  version: "0.14.0"
 
 recipe:
   name: ${{ name }}
@@ -10,7 +10,7 @@ recipe:
 
 source:
   url: https://github.com/google/s2geometry/archive/v${{ version }}.tar.gz
-  sha256: c09ec751c3043965a0d441e046a73c456c995e6063439a72290f661c1054d611
+  sha256: 8c1f0a4b98472ed9df9807f5ec10ee57928cca388e16c13f430b652790d3ad8b
   patches:
     # missing DLL exports on windows (data)
     - patches/0001-dllexport.patch
@@ -18,7 +18,7 @@ source:
     - patches/0003-version.patch
 
 build:
-  number: 4
+  number: 0
 
 outputs:
   - package:
