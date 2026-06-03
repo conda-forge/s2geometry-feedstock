@@ -1,7 +1,7 @@
 From c390b9fcca1d1529fefbfe576622dfa8645d329a Mon Sep 17 00:00:00 2001
 From: Benoit Bovy <benbovy@gmail.com>
 Date: Wed, 2 Nov 2022 13:41:35 +0100
-Subject: [PATCH] dllexport
+Subject: [PATCH 1/2] dllexport
 
 ---
  CMakeLists.txt                     |  4 ++++
