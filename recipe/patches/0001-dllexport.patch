@@ -1,21 +1,22 @@
-From edec51b6eb74623629937b816343f15e2f488c51 Mon Sep 17 00:00:00 2001
+From c390b9fcca1d1529fefbfe576622dfa8645d329a Mon Sep 17 00:00:00 2001
 From: Benoit Bovy <benbovy@gmail.com>
 Date: Wed, 2 Nov 2022 13:41:35 +0100
-Subject: [PATCH 1/3] dllexport
+Subject: [PATCH] dllexport
 
 ---
  CMakeLists.txt                     |  4 ++++
- src/s2/base/port.h                 | 14 ++++++++++++
- src/s2/s2coords_internal.h         | 12 +++++-----
+ src/s2/base/port.h                 | 17 +++++++++++++++
+ src/s2/s2coords_internal.h         |  1 +
  src/s2/s2edge_crossings_internal.h |  5 +++--
  src/s2/s2metrics.h                 | 35 +++++++++++++++---------------
- 5 files changed, 46 insertions(+), 24 deletions(-)
+ 5 files changed, 43 insertions(+), 19 deletions(-)
+ create mode 100644 src/s2/base/port.h
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d882e6b..1ca962c 100644
+index b6a0e11..7250b16 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -206,6 +206,10 @@ add_library(s2
+@@ -248,6 +248,10 @@ add_library(s2
              src/s2/util/math/mathutil.cc
              src/s2/util/units/length-units.cc)
  
@@ -23,17 +24,18 @@ index d882e6b..1ca962c 100644
 +  target_compile_definitions(s2 PRIVATE S2GEOMETRY_BUILDING_S2GEOMETRY)
 +endif()
 +
- if (GOOGLETEST_ROOT)
-   add_library(s2testing STATIC
-               src/s2/gmock_matchers.cc
+ target_link_libraries(
+     s2
+     absl::absl_vlog_is_on
 diff --git a/src/s2/base/port.h b/src/s2/base/port.h
-index dbd3384..5e8c4c7 100644
---- a/src/s2/base/port.h
+new file mode 100644
+index 0000000..a1734fc
+--- /dev/null
 +++ b/src/s2/base/port.h
-@@ -25,6 +25,20 @@
- #include <cstdint>
- #include <cstring>
- 
+@@ -0,0 +1,17 @@
++#ifndef S2_BASE_PORT_H_
++#define S2_BASE_PORT_H_
++
 +// -----------------------------------------------------------------------------
 +// MSVC Specific Requirements
 +// -----------------------------------------------------------------------------
@@ -47,60 +49,21 @@ index dbd3384..5e8c4c7 100644
 +#else
 +  #define S2GEOMETRY_DLL
 +#endif
-+
- // -----------------------------------------------------------------------------
- // Utility Functions
- // -----------------------------------------------------------------------------
++#endif  // S2_BASE_PORT_H_
 diff --git a/src/s2/s2coords_internal.h b/src/s2/s2coords_internal.h
-index df2f606..69d3878 100644
+index e976d05..3d4ef29 100644
 --- a/src/s2/s2coords_internal.h
 +++ b/src/s2/s2coords_internal.h
-@@ -18,6 +18,8 @@
- #ifndef S2_S2COORDS_INTERNAL_H_
+@@ -19,6 +19,7 @@
  #define S2_S2COORDS_INTERNAL_H_
  
+ #include "s2/_fp_contract_off.h"  // IWYU pragma: keep
 +#include "s2/base/port.h"
-+
+ 
  namespace S2 {
  namespace internal {
- 
-@@ -41,7 +43,7 @@ int constexpr kInvertMask = 0x02;
- // Given a cell orientation and the (i,j)-index of a subcell (0=(0,0),
- // 1=(0,1), 2=(1,0), 3=(1,1)), return the order in which this subcell is
- // visited by the Hilbert curve (a position in the range [0..3]).
--extern const int kIJtoPos[4][4];
-+S2GEOMETRY_DLL extern const int kIJtoPos[4][4];
- 
- // kPosToIJ[orientation][pos] -> ij
- //
-@@ -50,7 +52,7 @@ extern const int kIJtoPos[4][4];
- // inverse of the previous table:
- //
- //   kPosToIJ[r][kIJtoPos[r][ij]] == ij
--extern const int kPosToIJ[4][4];
-+S2GEOMETRY_DLL extern const int kPosToIJ[4][4];
- 
- // kPosToOrientation[pos] -> orientation_modifier
- //
-@@ -58,13 +60,13 @@ extern const int kPosToIJ[4][4];
- // with the given traversal position [0..3] is related to the orientation
- // of the parent cell.  The modifier should be XOR-ed with the parent
- // orientation to obtain the curve orientation in the child.
--extern const int kPosToOrientation[4];
-+S2GEOMETRY_DLL extern const int kPosToOrientation[4];
- 
- // The U,V,W axes for each face.
--extern const double kFaceUVWAxes[6][3][3];
-+S2GEOMETRY_DLL extern const double kFaceUVWAxes[6][3][3];
- 
- // The precomputed neighbors of each face (see GetUVWFace).
--extern const int kFaceUVWFaces[6][3][2];
-+S2GEOMETRY_DLL extern const int kFaceUVWFaces[6][3][2];
- 
- }  // namespace internal
- }  // namespace S2
 diff --git a/src/s2/s2edge_crossings_internal.h b/src/s2/s2edge_crossings_internal.h
-index 8e468b9..e68aa84 100644
+index 7725fd6..dc9b610 100644
 --- a/src/s2/s2edge_crossings_internal.h
 +++ b/src/s2/s2edge_crossings_internal.h
 @@ -21,6 +21,7 @@
@@ -109,9 +72,9 @@ index 8e468b9..e68aa84 100644
  
 +#include "s2/base/port.h"
  #include "absl/strings/string_view.h"
+ #include "s2/_fp_contract_off.h"  // IWYU pragma: keep
  #include "s2/s1angle.h"
- #include "s2/s2point.h"
-@@ -44,7 +45,7 @@ bool GetStableCrossProd(const Vector3<T>& a, const Vector3<T>& b,
+@@ -45,7 +46,7 @@ bool GetStableCrossProd(const Vector3<T>& a, const Vector3<T>& b,
  Vector3_d ExactCrossProd(const S2Point& a, const S2Point& b);
  
  // The maximum error in the method above.
@@ -120,8 +83,8 @@ index 8e468b9..e68aa84 100644
  
  // Returns the cross product of two points using symbolic perturbations, rounded
  // to double-precision and scaled so that the result can be normalized to an
-@@ -60,7 +61,7 @@ S2Point GetIntersectionExact(const S2Point& a0, const S2Point& a1,
-                              const S2Point& b0, const S2Point& b1);
+@@ -66,7 +67,7 @@ bool GetIntersectionStableLD(const S2Point& a0, const S2Point& a1,
+                              S2Point* result);
  
  // The maximum error in the method above.
 -extern const S1Angle kIntersectionExactError;
@@ -130,7 +93,7 @@ index 8e468b9..e68aa84 100644
  // The following field is used exclusively by s2edge_crossings_test.cc to
  // measure how often each intersection method is used by GetIntersection().
 diff --git a/src/s2/s2metrics.h b/src/s2/s2metrics.h
-index 0e9c77c..f6ff333 100644
+index 66c07ea..87d6149 100644
 --- a/src/s2/s2metrics.h
 +++ b/src/s2/s2metrics.h
 @@ -31,6 +31,7 @@
@@ -139,9 +102,9 @@ index 0e9c77c..f6ff333 100644
  
 +#include "s2/base/port.h"
  #include "absl/log/absl_check.h"
+ #include "s2/_fp_contract_off.h"  // IWYU pragma: keep
  #include "s2/s2coords.h"
- #include "s2/util/math/mathutil.h"
-@@ -87,9 +88,9 @@ using AreaMetric = Metric<2>;
+@@ -89,9 +90,9 @@ using AreaMetric = Metric<2>;
  // example, the maximum angle between opposite bounding planes for a cell at
  // level k is kMaxAngleSpan.GetValue(k), and the average angle span for all
  // cells at level k is approximately kAvgAngleSpan.GetValue(k).
@@ -154,7 +117,7 @@ index 0e9c77c..f6ff333 100644
  
  // The width of geometric figure is defined as the distance between two
  // parallel bounding lines in a given direction.  For cells, the minimum
-@@ -113,9 +114,9 @@ extern const LengthMetric kAvgAngleSpan;
+@@ -115,9 +116,9 @@ extern const LengthMetric kAvgAngleSpan;
  // Note that because S2Cells are not usually rectangles, the minimum width of
  // a cell is generally smaller than its minimum edge length.  (The interior
  // angles of an S2Cell range from 60 to 120 degrees.)
@@ -167,7 +130,7 @@ index 0e9c77c..f6ff333 100644
  
  // The minimum edge length of any cell at level k is at least
  // kMinEdge.GetValue(k), and the maximum is at most kMaxEdge.GetValue(k).
-@@ -126,9 +127,9 @@ extern const LengthMetric kAvgWidth;
+@@ -128,9 +129,9 @@ extern const LengthMetric kAvgWidth;
  // its edge neighbors.  In particular, it can be used to bound the distance
  // between adjacent cell centers along the space-filling Hilbert curve for
  // cells at any given level.
@@ -180,7 +143,7 @@ index 0e9c77c..f6ff333 100644
  
  // The minimum diagonal length of any cell at level k is at least
  // kMinDiag.GetValue(k), and the maximum is at most kMaxDiag.GetValue(k).
-@@ -138,26 +139,26 @@ extern const LengthMetric kAvgEdge;
+@@ -140,26 +141,26 @@ extern const LengthMetric kAvgEdge;
  // and also the maximum geometric width (see the discussion above).  So for
  // example, the distance from an arbitrary point to the closest cell center
  // at a given level is at most half the maximum diagonal length.
