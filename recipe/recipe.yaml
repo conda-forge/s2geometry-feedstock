@@ -23,6 +23,8 @@ build:
 outputs:
   - package:
       name: s2geometry
+    build:
+      script: build
     requirements:
       build:
         - ${{ compiler("cxx") }}
@@ -46,12 +48,12 @@ outputs:
           - if: unix
             then: bash run_test.sh
           - if: win
-            then: run_test.bat        
+            then: run_test.bat
+
   - package:
       name: s2geometry-python
     build:
-      script:
-        file: ${{ 'install_python.sh' if unix else 'install_python.bat' }}
+      script: install_python
     requirements:
       build:
         - ${{ stdlib("c") }}
