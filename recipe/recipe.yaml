@@ -28,8 +28,7 @@ outputs:
         - ${{ compiler("cxx") }}
         - ${{ stdlib("c") }}
         - cmake >=3.25,<4
-        - if: unix
-          then: make
+        - ninja
       host:
         - openssl
         - libabseil
