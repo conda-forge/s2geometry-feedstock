@@ -13,9 +13,9 @@ source:
   sha256: c09ec751c3043965a0d441e046a73c456c995e6063439a72290f661c1054d611
   patches:
     # missing DLL exports on windows (data)
-    - dllexport.patch
-    - python-setup.patch
-    - version.patch
+    - patches/0001-dllexport.patch
+    - patches/0002-python-setup.patch
+    - patches/0003-version.patch
 
 build:
   number: 4
