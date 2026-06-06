@@ -1,0 +1,110 @@
+schema_version: 1
+
+context:
+  name: s2geometry
+  version: "0.14.0"
+
+recipe:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/google/s2geometry/archive/v${{ version }}.tar.gz
+  sha256: 8c1f0a4b98472ed9df9807f5ec10ee57928cca388e16c13f430b652790d3ad8b
+  patches:
+    # missing DLL exports on windows (data)
+    - patches/0001-dllexport.patch
+    # backport https://github.com/google/s2geometry/pull/609
+    - patches/0002-S2PointArray-replace-alignof-expression-with-alignof.patch
+    # backport https://github.com/google/s2geometry/pull/637
+    - patches/0003-fix-issues-with-MSVC.patch
+
+build:
+  number: 0
+
+outputs:
+  - package:
+      name: s2geometry
+    build:
+      script: build
+    requirements:
+      build:
+        - ${{ compiler("cxx") }}
+        - ${{ stdlib("c") }}
+        - cmake >=3.25,<4
+        - ninja
+      host:
+        - openssl
+        - libabseil
+      run:
+        - libabseil
+      run_exports:
+        - ${{ pin_subpackage('s2geometry', upper_bound='x.x') }}
+    tests:
+      - files:
+          recipe:
+            - run_test.bat
+            - run_test.sh
+        script:
+          - if: unix
+            then: bash run_test.sh
+          - if: win
+            then: run_test.bat
+
+  - package:
+      name: s2geometry-python
+    build:
+      script: install_python
+    requirements:
+      build:
+        - ${{ stdlib("c") }}
+        - ${{ compiler('cxx') }}
+        - cmake
+        - if: unix
+          then: make
+        - if: win
+          then: ninja
+        - if: build_platform != target_platform
+          then: python
+        - if: build_platform != target_platform
+          then: cross-python_${{ target_platform }}
+        - if: build_platform != target_platform
+          then: cmake-build-extension
+        - swig
+      host:
+        - python
+        - pip
+        - setuptools >=80
+        - setuptools-scm >=8
+        - libabseil
+        - cmake-build-extension
+        - openssl
+      run:
+        - libabseil
+        - openssl
+    tests:
+      - python:
+          imports:
+            - s2geometry
+      - files:
+          source:
+            - src/python/s2geometry_test.py
+        script:
+          - python ./src/python/s2geometry_test.py
+        requirements:
+          run:
+            - python
+
+about:
+  license: Apache-2.0
+  license_file: LICENSE
+  summary: Computational geometry and spatial indexing on the sphere.
+  homepage: https://s2geometry.io/
+  repository: https://github.com/google/s2geometry
+
+extra:
+  recipe-maintainers:
+    - zklaus
+    - benbovy
+    - hobu
+    - h-vetinari

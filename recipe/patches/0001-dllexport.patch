@@ -1,0 +1,180 @@
+From c390b9fcca1d1529fefbfe576622dfa8645d329a Mon Sep 17 00:00:00 2001
+From: Benoit Bovy <benbovy@gmail.com>
+Date: Wed, 2 Nov 2022 13:41:35 +0100
+Subject: [PATCH 1/3] dllexport
+
+---
+ CMakeLists.txt                     |  4 ++++
+ src/s2/base/port.h                 | 17 +++++++++++++++
+ src/s2/s2coords_internal.h         |  1 +
+ src/s2/s2edge_crossings_internal.h |  5 +++--
+ src/s2/s2metrics.h                 | 35 +++++++++++++++---------------
+ 5 files changed, 43 insertions(+), 19 deletions(-)
+ create mode 100644 src/s2/base/port.h
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b6a0e11..7250b16 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -248,6 +248,10 @@ add_library(s2
+             src/s2/util/math/mathutil.cc
+             src/s2/util/units/length-units.cc)
+ 
++if (WIN32)
++  target_compile_definitions(s2 PRIVATE S2GEOMETRY_BUILDING_S2GEOMETRY)
++endif()
++
+ target_link_libraries(
+     s2
+     absl::absl_vlog_is_on
+diff --git a/src/s2/base/port.h b/src/s2/base/port.h
+new file mode 100644
+index 0000000..a1734fc
+--- /dev/null
++++ b/src/s2/base/port.h
+@@ -0,0 +1,17 @@
++#ifndef S2_BASE_PORT_H_
++#define S2_BASE_PORT_H_
++
++// -----------------------------------------------------------------------------
++// MSVC Specific Requirements
++// -----------------------------------------------------------------------------
++
++#ifdef _WIN32
++  #ifdef S2GEOMETRY_BUILDING_S2GEOMETRY
++    #define S2GEOMETRY_DLL __declspec(dllexport)
++  #else
++    #define S2GEOMETRY_DLL __declspec(dllimport)
++  #endif
++#else
++  #define S2GEOMETRY_DLL
++#endif
++#endif  // S2_BASE_PORT_H_
+diff --git a/src/s2/s2coords_internal.h b/src/s2/s2coords_internal.h
+index e976d05..3d4ef29 100644
+--- a/src/s2/s2coords_internal.h
++++ b/src/s2/s2coords_internal.h
+@@ -19,6 +19,7 @@
+ #define S2_S2COORDS_INTERNAL_H_
+ 
+ #include "s2/_fp_contract_off.h"  // IWYU pragma: keep
++#include "s2/base/port.h"
+ 
+ namespace S2 {
+ namespace internal {
+diff --git a/src/s2/s2edge_crossings_internal.h b/src/s2/s2edge_crossings_internal.h
+index 7725fd6..dc9b610 100644
+--- a/src/s2/s2edge_crossings_internal.h
++++ b/src/s2/s2edge_crossings_internal.h
+@@ -21,6 +21,7 @@
+ #ifndef S2_S2EDGE_CROSSINGS_INTERNAL_H_
+ #define S2_S2EDGE_CROSSINGS_INTERNAL_H_
+ 
++#include "s2/base/port.h"
+ #include "absl/strings/string_view.h"
+ #include "s2/_fp_contract_off.h"  // IWYU pragma: keep
+ #include "s2/s1angle.h"
+@@ -45,7 +46,7 @@ bool GetStableCrossProd(const Vector3<T>& a, const Vector3<T>& b,
+ Vector3_d ExactCrossProd(const S2Point& a, const S2Point& b);
+ 
+ // The maximum error in the method above.
+-extern const S1Angle kExactCrossProdError;
++S2GEOMETRY_DLL extern const S1Angle kExactCrossProdError;
+ 
+ // Returns the cross product of two points using symbolic perturbations, rounded
+ // to double-precision and scaled so that the result can be normalized to an
+@@ -66,7 +67,7 @@ bool GetIntersectionStableLD(const S2Point& a0, const S2Point& a1,
+                              S2Point* result);
+ 
+ // The maximum error in the method above.
+-extern const S1Angle kIntersectionExactError;
++S2GEOMETRY_DLL extern const S1Angle kIntersectionExactError;
+ 
+ // The following field is used exclusively by s2edge_crossings_test.cc to
+ // measure how often each intersection method is used by GetIntersection().
+diff --git a/src/s2/s2metrics.h b/src/s2/s2metrics.h
+index 66c07ea..87d6149 100644
+--- a/src/s2/s2metrics.h
++++ b/src/s2/s2metrics.h
+@@ -31,6 +31,7 @@
+ #include <algorithm>
+ #include <cmath>
+ 
++#include "s2/base/port.h"
+ #include "absl/log/absl_check.h"
+ #include "s2/_fp_contract_off.h"  // IWYU pragma: keep
+ #include "s2/s2coords.h"
+@@ -89,9 +90,9 @@ using AreaMetric = Metric<2>;
+ // example, the maximum angle between opposite bounding planes for a cell at
+ // level k is kMaxAngleSpan.GetValue(k), and the average angle span for all
+ // cells at level k is approximately kAvgAngleSpan.GetValue(k).
+-extern const LengthMetric kMinAngleSpan;
+-extern const LengthMetric kMaxAngleSpan;
+-extern const LengthMetric kAvgAngleSpan;
++S2GEOMETRY_DLL extern const LengthMetric kMinAngleSpan;
++S2GEOMETRY_DLL extern const LengthMetric kMaxAngleSpan;
++S2GEOMETRY_DLL extern const LengthMetric kAvgAngleSpan;
+ 
+ // The width of geometric figure is defined as the distance between two
+ // parallel bounding lines in a given direction.  For cells, the minimum
+@@ -115,9 +116,9 @@ extern const LengthMetric kAvgAngleSpan;
+ // Note that because S2Cells are not usually rectangles, the minimum width of
+ // a cell is generally smaller than its minimum edge length.  (The interior
+ // angles of an S2Cell range from 60 to 120 degrees.)
+-extern const LengthMetric kMinWidth;
+-extern const LengthMetric kMaxWidth;
+-extern const LengthMetric kAvgWidth;
++S2GEOMETRY_DLL extern const LengthMetric kMinWidth;
++S2GEOMETRY_DLL extern const LengthMetric kMaxWidth;
++S2GEOMETRY_DLL extern const LengthMetric kAvgWidth;
+ 
+ // The minimum edge length of any cell at level k is at least
+ // kMinEdge.GetValue(k), and the maximum is at most kMaxEdge.GetValue(k).
+@@ -128,9 +129,9 @@ extern const LengthMetric kAvgWidth;
+ // its edge neighbors.  In particular, it can be used to bound the distance
+ // between adjacent cell centers along the space-filling Hilbert curve for
+ // cells at any given level.
+-extern const LengthMetric kMinEdge;
+-extern const LengthMetric kMaxEdge;
+-extern const LengthMetric kAvgEdge;
++S2GEOMETRY_DLL extern const LengthMetric kMinEdge;
++S2GEOMETRY_DLL extern const LengthMetric kMaxEdge;
++S2GEOMETRY_DLL extern const LengthMetric kAvgEdge;
+ 
+ // The minimum diagonal length of any cell at level k is at least
+ // kMinDiag.GetValue(k), and the maximum is at most kMaxDiag.GetValue(k).
+@@ -140,26 +141,26 @@ extern const LengthMetric kAvgEdge;
+ // and also the maximum geometric width (see the discussion above).  So for
+ // example, the distance from an arbitrary point to the closest cell center
+ // at a given level is at most half the maximum diagonal length.
+-extern const LengthMetric kMinDiag;
+-extern const LengthMetric kMaxDiag;
+-extern const LengthMetric kAvgDiag;
++S2GEOMETRY_DLL extern const LengthMetric kMinDiag;
++S2GEOMETRY_DLL extern const LengthMetric kMaxDiag;
++S2GEOMETRY_DLL extern const LengthMetric kAvgDiag;
+ 
+ // The minimum area of any cell at level k is at least kMinArea.GetValue(k),
+ // and the maximum is at most kMaxArea.GetValue(k).  The average area of all
+ // cells at level k is exactly kAvgArea.GetValue(k).
+-extern const AreaMetric kMinArea;
+-extern const AreaMetric kMaxArea;
+-extern const AreaMetric kAvgArea;
++S2GEOMETRY_DLL extern const AreaMetric kMinArea;
++S2GEOMETRY_DLL extern const AreaMetric kMaxArea;
++S2GEOMETRY_DLL extern const AreaMetric kAvgArea;
+ 
+ // This is the maximum edge aspect ratio over all cells at any level, where
+ // the edge aspect ratio of a cell is defined as the ratio of its longest
+ // edge length to its shortest edge length.
+-extern const double kMaxEdgeAspect;
++S2GEOMETRY_DLL extern const double kMaxEdgeAspect;
+ 
+ // This is the maximum diagonal aspect ratio over all cells at any level,
+ // where the diagonal aspect ratio of a cell is defined as the ratio of its
+ // longest diagonal length to its shortest diagonal length.
+-extern const double kMaxDiagAspect;
++S2GEOMETRY_DLL extern const double kMaxDiagAspect;
+ 
+ 
+ //////////////////   Implementation details follow   ////////////////////

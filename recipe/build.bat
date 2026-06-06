@@ -1,7 +1,7 @@
 mkdir build_cpp
 cd build_cpp
 
-cmake %SRC_DIR% -G "NMake Makefiles" ^
+cmake %SRC_DIR% -G "Ninja" ^
                 -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_PREFIX_PATH="%PREFIX%" ^
                 -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
@@ -13,10 +13,10 @@ cmake %SRC_DIR% -G "NMake Makefiles" ^
                 -UGOOGLETEST_ROOT
 if errorlevel 1 exit 1
 
-nmake
+cmake --build .
 if errorlevel 1 exit 1
 
-nmake install
+cmake --install .
 if errorlevel 1 exit 1
 
 copy %PREFIX%\Library\bin\s2.dll %PREFIX%\Library\bin\libs2.dll
