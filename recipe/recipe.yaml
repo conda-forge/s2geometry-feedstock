@@ -16,6 +16,8 @@ source:
     - patches/0001-dllexport.patch
     # backport https://github.com/google/s2geometry/pull/609
     - patches/0002-S2PointArray-replace-alignof-expression-with-alignof.patch
+    # backport https://github.com/google/s2geometry/pull/637
+    - patches/0003-fix-issues-with-MSVC.patch
 
 build:
   number: 0
