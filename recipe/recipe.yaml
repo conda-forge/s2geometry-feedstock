@@ -17,10 +17,10 @@ source:
     # backport https://github.com/google/s2geometry/pull/609
     - patches/0002-S2PointArray-replace-alignof-expression-with-alignof.patch
     # backport https://github.com/google/s2geometry/pull/637
-    - patches/0003-fix-issues-with-MSVC.patch
+    - patches/0003-Fix-MSVC-build.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - package:
@@ -41,6 +41,11 @@ outputs:
       run_exports:
         - ${{ pin_subpackage('s2geometry', upper_bound='x.x') }}
     tests:
+      - package_contents:
+          include:
+            # test that custom header is present; it got removed upstream in
+            # https://github.com/google/s2geometry/commit/dabeea21c0261cb2e449d28f3034df1e12eaf223
+            - s2/base/port.h
       - files:
           recipe:
             - run_test.bat

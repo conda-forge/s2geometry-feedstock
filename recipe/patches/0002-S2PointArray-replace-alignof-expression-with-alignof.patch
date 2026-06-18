@@ -1,4 +1,4 @@
-From 680a610d28361243dd94377016f292e128270303 Mon Sep 17 00:00:00 2001
+From 17872eaaa0fb496fe50b37d816c6c5ca4e43fd07 Mon Sep 17 00:00:00 2001
 From: Abhinav Gautam <abgautam1017@gmail.com>
 Date: Mon, 11 May 2026 12:25:32 +0530
 Subject: [PATCH 2/3] S2PointArray: replace alignof(expression) with
