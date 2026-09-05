@@ -20,7 +20,7 @@ source:
     - patches/0003-Fix-MSVC-build.patch
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - package:
@@ -70,11 +70,10 @@ outputs:
         - if: win
           then: ninja
         - if: build_platform != target_platform
-          then: python
-        - if: build_platform != target_platform
-          then: cross-python_${{ target_platform }}
-        - if: build_platform != target_platform
-          then: cmake-build-extension
+          then:
+            - python
+            - cross-python_${{ target_platform }}
+            - cmake-build-extension
         - swig
       host:
         - python
