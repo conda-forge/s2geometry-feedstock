@@ -18,9 +18,11 @@ source:
     - patches/0002-S2PointArray-replace-alignof-expression-with-alignof.patch
     # backport https://github.com/google/s2geometry/pull/637
     - patches/0003-Fix-MSVC-build.patch
+    # backport https://github.com/google/s2geometry/pull/653
+    - patches/0004-fix-absl-20260526.patch
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - package:
@@ -70,11 +72,10 @@ outputs:
         - if: win
           then: ninja
         - if: build_platform != target_platform
-          then: python
-        - if: build_platform != target_platform
-          then: cross-python_${{ target_platform }}
-        - if: build_platform != target_platform
-          then: cmake-build-extension
+          then:
+            - python
+            - cross-python_${{ target_platform }}
+            - cmake-build-extension
         - swig
       host:
         - python
