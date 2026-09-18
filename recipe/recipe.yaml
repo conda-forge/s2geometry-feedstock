@@ -18,6 +18,8 @@ source:
     - patches/0002-S2PointArray-replace-alignof-expression-with-alignof.patch
     # backport https://github.com/google/s2geometry/pull/637
     - patches/0003-Fix-MSVC-build.patch
+    # backport https://github.com/google/s2geometry/pull/653
+    - patches/0004-fix-absl-20260526.patch
 
 build:
   number: 2
