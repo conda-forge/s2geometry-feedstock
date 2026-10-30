@@ -22,7 +22,7 @@ source:
     - patches/0004-fix-absl-20260526.patch
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   - package:
